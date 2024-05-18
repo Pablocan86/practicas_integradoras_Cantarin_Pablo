@@ -9,10 +9,10 @@
     <button type="submit" id="btnEnviar">Enviar</button>
   </form>
   <div id="muestraMensajes">
-    {{#each verM}}
-      <p>{{this.user}}
-      </p>
-      <p>{{this.message}}</p>
+    {{#each listMessages}}
+      <div>
+        <p>{{user}} dice: <span>{{message}}</span></p>
+      </div>
     {{/each}}
   </div>
 </div>

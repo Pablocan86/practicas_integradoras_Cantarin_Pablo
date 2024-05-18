@@ -6,20 +6,19 @@ const MessageManager = require("../dao/messageManager.js");
 const messageM = new MessageManager();
 router.get("/api/messages", async (req, res) => {
   try {
-    let messages = await messageModel.find();
-    console.log(messages);
-    res.render("chat");
+    const listMessages = await messageModel.find().lean();
+
+    res.render("chat", { listMessages });
   } catch (error) {
     console.error("No se encuentas mensajes en la Base de datos", error);
   }
 });
 
 router.post("/api/messages", async (req, res) => {
-  let messages = await messageModel.find();
   let { usuario, mensaje } = req.body;
   await messageM.addMessage(usuario, mensaje);
-
-  res.render("chat");
+  const listMessages = await messageModel.find().lean();
+  res.render("chat", { listMessages });
 });
 
 router.put("/", (req, res) => {
