@@ -4,6 +4,10 @@ const mongoose = require("mongoose");
 const productsRouter = require("./routes/products.router.js");
 const cartsRouter = require("./routes/carts.router.js");
 const messageRouter = require("./routes/messages.router.js");
+const dotenv = require("dotenv");
+
+dotenv.config();
+console.log(process.env.MONGO_URL);
 
 const app = express();
 const PORT = 8080;
@@ -17,9 +21,7 @@ app.set("views", __dirname + "/views");
 app.set("view engine", "handlebars");
 
 mongoose
-  .connect(
-    "mongodb+srv://pablocan86:profesorado86@cluster0.xf8aqda.mongodb.net/ecommerce?retryWrites=true&w=majority&appName=Cluster0"
-  )
+  .connect(process.env.MONGO_URL)
   .then(() => {
     console.log("Conectado a la base de datos");
   })
