@@ -13,7 +13,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "/public"));
 
 app.engine("handlebars", handlebars.engine());
-
 app.set("views", __dirname + "/views");
 app.set("view engine", "handlebars");
 
@@ -28,8 +27,8 @@ mongoose
     console.error("Error en la conexión", error);
   });
 
-app.use("/products", productsRouter);
+app.use("/api", productsRouter);
 app.use("/", cartsRouter);
-app.use("/", messageRouter);
+app.use("/api", messageRouter);
 
 app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));

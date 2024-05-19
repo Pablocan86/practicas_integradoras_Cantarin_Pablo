@@ -4,21 +4,21 @@ const messageModel = require("../dao/models/message.model.js");
 const MessageManager = require("../dao/messageManager.js");
 
 const messageM = new MessageManager();
-router.get("/api/messages", async (req, res) => {
+router.get("/messages", async (req, res) => {
   try {
     const listMessages = await messageModel.find().lean();
 
-    res.render("chat", { listMessages });
+    res.render("chat", { listMessages, style: "message.css" });
   } catch (error) {
     console.error("No se encuentas mensajes en la Base de datos", error);
   }
 });
 
-router.post("/api/messages", async (req, res) => {
+router.post("/messages", async (req, res) => {
   let { usuario, mensaje } = req.body;
   await messageM.addMessage(usuario, mensaje);
   const listMessages = await messageModel.find().lean();
-  res.render("chat", { listMessages });
+  res.render("chat", { listMessages, style: "message.css" });
 });
 
 router.put("/", (req, res) => {

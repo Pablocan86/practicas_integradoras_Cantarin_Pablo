@@ -1,16 +1,16 @@
 document.addEventListener("DOMContentLoaded", () => {
   const deleteButtons = document.querySelectorAll(".deleteButton");
 
-  deleteButtons.forEach((span) => {
-    span.addEventListener("click", async () => {
-      const messageId = span.getAttribute("data-id");
+  deleteButtons.forEach((button) => {
+    button.addEventListener("click", async () => {
+      const productId = button.getAttribute("data-id");
       const confirmDelete = confirm(
-        "¿Estás seguro de que deseas eliminar este mensaje?"
+        "¿Estás seguro de que deseas eliminar este producto?"
       );
 
       if (confirmDelete) {
         try {
-          const response = await fetch(`/api/messages/${messageId}`, {
+          const response = await fetch(`/api/productsManager/${productId}`, {
             method: "DELETE",
             headers: {
               "Content-Type": "application/json",
@@ -18,14 +18,14 @@ document.addEventListener("DOMContentLoaded", () => {
           });
 
           if (response.ok) {
-            alert("Mensaje eliminado exitosamente");
+            alert("Producto eliminado exitosamente");
             // Opcional: remover el elemento del DOM
-            span.parentElement.remove();
+            button.parentElement.remove();
           } else {
-            alert("Error al eliminar el mensaje");
+            alert("Error al eliminar el producto");
           }
         } catch (error) {
-          alert("Error de red al intentar eliminar el mensaje");
+          alert("Error de red al intentar eliminar el producto");
         }
       }
     });

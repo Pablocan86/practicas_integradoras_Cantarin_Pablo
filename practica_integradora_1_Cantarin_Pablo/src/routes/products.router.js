@@ -4,17 +4,29 @@ const productModel = require("../dao/models/product.model.js");
 const ProductManager = require("../dao/productManager.js");
 const productManager = new ProductManager();
 
-router.get("/", async (req, res) => {
+router.get("/productsHome", async (req, res) => {
   try {
-    let products = await productModel.find();
+    let products = await productManager.getProducts();
 
-    res.send({ result: "success", payload: products });
+    res.render("productsHome", { products, style: "products.css" });
+    // res.send({ result: "success", payload: products });
+  } catch (error) {
+    console.error("No se encuentran productos en la Base de datos", error);
+  }
+});
+router.get("/productsManager", async (req, res) => {
+  try {
+    let products = await productManager.getProducts();
+
+    res.render("productsManager", { products, style: "products.css" });
+    // res.send({ result: "success", payload: products });
   } catch (error) {
     console.error("No se encuentran productos en la Base de datos", error);
   }
 });
 
-router.post("/", async (req, res) => {
+router.post("/productsManager", async (req, res) => {
+  let products = await productManager.getProducts();
   let { title, description, price, thumbnail, code, status, stock } = req.body;
   try {
     await productManager.addProduct(
@@ -26,14 +38,29 @@ router.post("/", async (req, res) => {
       status,
       stock
     );
-    res
-      .status(201)
-      .json({ message: `Producto ${title} agregado correctamente` });
+    res.render("productsManager", {
+      products,
+      style: "products.css",
+      agregado: `Producto ${title} agregado correctamente`,
+    });
+    // res
+    //   .status(201)
+    //   .json({ message: `Producto ${title} agregado correctamente` });
   } catch (error) {
+    let products = await productManager.getProducts();
     if (error.message === "No se han completado todos los campos") {
-      res.status(400).json({ error: "No se han completado todos los campos" });
+      res.render("productsManager", {
+        products,
+        style: "products.css",
+        error: "No se han completado todos los campos",
+      });
     } else if (error.message === "Número de código existente") {
-      res.status(400).json({ error: "Número de código existente" });
+      res.render("productsManager", {
+        products,
+        style: "products.css",
+        error: "Código de producto existente",
+      });
+      // res.status(400).json({ error: "Número de código existente" });
     } else {
       res
         .status(500)
@@ -71,13 +98,12 @@ router.put("/:uid", async (req, res) => {
   }
 });
 
-router.delete("/:uid", async (req, res) => {
+router.delete("/productsManager/:uid", async (req, res) => {
   let { uid } = req.params;
   let products = await productModel.find();
   try {
-    const exist = products.find((prod) => prod.id === uid);
     await productManager.deleteProduct(uid);
-    res.status(201).json({ message: `Producto ${exist.title} borrado` });
+    res.render("productsManager");
   } catch (error) {
     if (
       error.message === "No se encuentra producto con es id en la base de datos"

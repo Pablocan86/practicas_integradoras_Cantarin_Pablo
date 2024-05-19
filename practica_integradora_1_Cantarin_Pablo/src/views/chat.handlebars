@@ -1,4 +1,4 @@
-<div>
+<div class="divPrincipal">
   <h2>CHAT CLIENTES</h2>
 
   <form action="/api/messages" method="post">
@@ -10,11 +10,26 @@
   </form>
   <div id="muestraMensajes">
     {{#each listMessages}}
-      <div>
-        <p>{{user}} dice: <span>{{message}}</span></p>
+      <div class="messageItem">
+
+        <span class="material-symbols-outlined">
+          voice_selection
+        </span>
+        <p>
+          {{user}}
+          :
+          <span>{{message}}</span></p>
+        <span
+          id="close"
+          class="material-symbols-outlined deleteButton"
+          data-id="{{_id}}"
+        >
+          close
+        </span>
       </div>
     {{/each}}
   </div>
+  <a href="./productsHome">Volver a products</a>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script src="/js/chat.js"></script>
