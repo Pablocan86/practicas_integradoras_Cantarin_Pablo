@@ -52,17 +52,6 @@ h2 {
   height: 100px;
 }
 
-.deleteButton {
-  background-color: rgb(255, 0, 0);
-  width: 200px;
-  border: none;
-  padding: 5px;
-  font-size: 1rem;
-  border-radius: 5px;
-  color: white;
-  margin: 5px;
-}
-
 .productsManager {
   display: flex;
   flex-direction: column;
@@ -94,7 +83,6 @@ h2 {
   padding-right: 25%;
 }
 .addButton {
-  width: 25%;
   background-color: rgb(15, 221, 15);
   padding: 5px;
   font-size: 1rem;
@@ -106,7 +94,6 @@ h2 {
 }
 
 .deleteButton {
-  width: 25%;
   background-color: rgb(240, 30, 65);
   padding: 5px;
   font-size: 1rem;
