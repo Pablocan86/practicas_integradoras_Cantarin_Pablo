@@ -1,0 +1,15 @@
+<div class="divCart">
+  <h2>CARRITO</h2>
+  {{#if cart.products.length}}
+    {{#each cart.products}}
+      <div class="productInCart">
+        <img class="imgProductCart" src="{{this.product.thumbnail}}" alt="" />
+        <p>{{this.product.title}}</p>
+        <p>Cantidad: {{this.quantity}}</p>
+      </div>
+    {{/each}}
+  {{else}}
+    <p>El carrito se encuentra vacío</p>
+  {{/if}}
+  <a href="/products">Home</a>
+</div>
