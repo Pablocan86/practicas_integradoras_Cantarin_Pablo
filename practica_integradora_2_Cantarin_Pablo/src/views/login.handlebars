@@ -4,20 +4,20 @@
     <input type="email" name="email" required />
     <label for="password">Contraseña:</label>
     <input type="password" name="password" required />
-     {{#if Error}}
-    <p class="avisoError">{{Error}}
-    </p>  
+    {{#if Error}}
+      <p class="avisoError">{{Error}}
+      </p>
     {{/if}}
     <button class="submitButton" type="submit">Ingresar</button>
-   
+
     <div class="gitHubDiv">
-      <a class="gitHub" href="/api/sessions/github">Inicia sesión con
+      <a class="gitHub" href="/api/sessions/github">GitHub
         <img
           class="imgGitHub"
           src="https://cdn-icons-png.flaticon.com/512/25/25231.png"
           alt=""
         /></a>
-      <a class="gitHub" href="/api/sessions/auth/google">Inicia sesión con
+      <a class="gitHub" href="/api/sessions/auth/google">Google
         <img
           class="imgGitHub"
           src="https://cdn-icons-png.flaticon.com/512/300/300221.png"

@@ -2,14 +2,26 @@
   <h2>CARRITO</h2>
   {{#if cart.products.length}}
     {{#each cart.products}}
-      <div class="productInCart">
+      <div class="productInCart" data-id="{{../cart._id}}">
         <img class="imgProductCart" src="{{this.product.thumbnail}}" alt="" />
         <p>{{this.product.title}}</p>
         <p>Cantidad: {{this.quantity}}</p>
-      </div>
+        </button>
+        <button class="deleteButton" data-id="{{this._id}}">Borrar</button>
+       </div>
     {{/each}}
   {{else}}
-    <p>El carrito se encuentra vacío</p>
+    <div class="carritoVacio">
+      <p>¿Aún no has añadido productos al carrito!</p>
+      <img
+        src="https://png.pngtree.com/background/20230813/original/pngtree-consumer-cat-shopping-cart-ridiculous-buy-photo-picture-image_4629778.jpg"
+        alt="Carrito de compras con gato"
+      />
+
+    </div>
   {{/if}}
-  <a href="/products">Home</a>
 </div>
+  <a href="/products">Home</a>
+
+
+<script src="/js/cart.js"></script>

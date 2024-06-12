@@ -69,7 +69,6 @@ const initializePassport = () => {
       },
       async (accessToken, refreshToken, profile, done) => {
         try {
-          console.log(profile);
           let user = await userService.findOne({
             email: profile._json.email,
           });
@@ -84,6 +83,7 @@ const initializePassport = () => {
               password: "",
               cart: createCart._id,
             };
+
             let result = await userService.create(newUser);
             done(null, result);
           } else {

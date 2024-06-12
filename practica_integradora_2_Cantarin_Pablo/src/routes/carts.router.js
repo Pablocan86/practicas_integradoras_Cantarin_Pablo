@@ -112,30 +112,30 @@ router.get("/carrito/:cid/product/:pid", async (req, res) => {
 });
 //Ruta que borra todo el carrito
 
-router.delete("/carts/:uid", async (req, res) => {
-  let { uid } = req.params;
-  try {
-    await cartManager.deleteCart(uid);
+// router.delete("/carts/:uid", async (req, res) => {
+//   let { uid } = req.params;
+//   try {
+//     await cartManager.deleteCart(uid);
 
-    res
-      .status(201)
-      .json({ message: `Carrito con ID: '${uid}' borrado correctamente` });
-  } catch (error) {
-    if (
-      error.message === "No se encuentra carrito con es id en la base de datos"
-    ) {
-      res.status(400).json({
-        error: "No se encuentra carrito con es id en la base de datos",
-      });
-    } else if (error.message === "No hay carritos para borrar") {
-      res.status(401).json({ error: "No hay carritos para borrar" });
-    } else {
-      res
-        .status(500)
-        .json({ error: "Ocurrió un error al procesar la solicitud" });
-    }
-  }
-});
+//     res
+//       .status(201)
+//       .json({ message: `Carrito con ID: '${uid}' borrado correctamente` });
+//   } catch (error) {
+//     if (
+//       error.message === "No se encuentra carrito con es id en la base de datos"
+//     ) {
+//       res.status(400).json({
+//         error: "No se encuentra carrito con es id en la base de datos",
+//       });
+//     } else if (error.message === "No hay carritos para borrar") {
+//       res.status(401).json({ error: "No hay carritos para borrar" });
+//     } else {
+//       res
+//         .status(500)
+//         .json({ error: "Ocurrió un error al procesar la solicitud" });
+//     }
+//   }
+// });
 
 //Ruta que solo borra el producto del carrito seleccionado
 router.delete("/carts/:cid/products/:pid", async (req, res) => {
@@ -147,20 +147,21 @@ router.delete("/carts/:cid/products/:pid", async (req, res) => {
       return res.status(404).send({ Respuesta: "Carrito no encontrado" });
     }
 
-    let product = cart.products.find((p) => p.product.toString() === pid);
-    if (!product) {
+    let productInCart = cart.products.find((p) => p._id.toString() === pid);
+
+    if (!productInCart) {
       return res
         .status(404)
         .send({ Respuesta: "No existe producto en el carrito" });
     }
 
     // Eliminar el producto del array de productos
-    cart.products = cart.products.filter((p) => p.product != pid);
+    cart.products = cart.products.filter((p) => p._id != pid);
 
     // Guardar los cambios en el carrito
     await cart.save();
 
-    res.send({ Respuesta: "Producto borrado" });
+    res.render("cart", { cart, style: "cart.css", title: "Carrito" });
   } catch (error) {
     res.status(500).send({ error: error.message });
   }
