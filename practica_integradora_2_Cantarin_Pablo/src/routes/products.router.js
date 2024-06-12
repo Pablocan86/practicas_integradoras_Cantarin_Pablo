@@ -119,10 +119,11 @@ router.get("/products", async (req, res) => {
       .skip(offset)
       .limit(limit);
 
-    // Construir la respuesta
+    // Construir la respuestas
     const response = {
       status: "success",
       payload: products,
+      userOne: req.session.user,
       totalPages,
       prevPage: page > 1 ? page - 1 : null,
       nextPage: page < totalPages ? page + 1 : null,
@@ -142,15 +143,25 @@ router.get("/products", async (req, res) => {
             }&category=${category || ""}`
           : null,
     };
-    const cart = await cartModel.findById("664fa5d4d2c40fa1c15d6a58");
+
     //Renderizamos la vista
-    res.render("products", {
-      user: req.session.user,
-      cart: cart.products,
-      response,
-      style: "products.css",
-      title: "Productos",
-    });
+    if (req.session.user) {
+      const cart = await cartModel.findById(req.session.user.cart);
+      res.render("products", {
+        user: req.session.user,
+        cart: cart.products,
+        response,
+        style: "products.css",
+        title: "Productos",
+      });
+    } else {
+      res.render("products", {
+        response,
+        style: "products.css",
+        title: "Productos",
+      });
+    }
+
     // res.json(response);
   } catch (error) {
     console.error("Error fetching products:", error);
@@ -158,17 +169,29 @@ router.get("/products", async (req, res) => {
   }
 });
 
-router.get("/productDetails/:pid", isAuthenticated, async (req, res) => {
+router.get("/productDetails/:pid", async (req, res) => {
   let { pid } = req.params;
-  const cart = await cartModel.findById("664fa5d4d2c40fa1c15d6a58");
   const product = await productModel.findById(pid).lean();
-  // res.send(product)
-  res.render("productDetail", {
-    cart: cart.products,
-    product,
-    style: "productDetails.css",
-    title: "Detalles producto",
-  });
+  if (req.session.user) {
+    const cart = await cartModel.findById(req.session.user.cart);
+    if (cart) {
+      res.render("productDetail", {
+        cart: cart.products,
+        user: req.session.user,
+        product,
+        style: "productDetails.css",
+        title: "Detalles producto",
+      });
+    }
+
+    // res.send(product)
+  } else {
+    res.render("productDetail", {
+      product,
+      style: "productDetails.css",
+      title: "Detalles producto",
+    });
+  }
 });
 
 router.get("/productsManager", isAuthenticated, async (req, res) => {

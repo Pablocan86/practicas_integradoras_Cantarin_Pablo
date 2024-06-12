@@ -1,7 +1,13 @@
 const express = require("express");
 const userModel = require("../../dao/models/users.model.js");
+const jwt = require("jsonwebtoken");
 const passport = require("passport");
-const { generateToken, authToken } = require("../../utils.js");
+const {
+  generateToken,
+  authToken,
+  passportCall,
+  authorization,
+} = require("../../utils.js");
 const router = express.Router();
 
 const PRIVATE_KEY = "CoderKeyQueFuncionaComoUnSecret";
@@ -33,23 +39,45 @@ router.post("/registerJWT", (req, res) => {
   res.send({ status: "success", access_token });
 });
 
+// router.post("/loginJWT", (req, res) => {
+//   const { email, password } = req.body;
+//   const user = users.find(
+//     (user) => user.email === email && user.password === password
+//   );
+//   if (!user)
+//     return res
+//       .status(400)
+//       .send({ status: "error", error: "Invalid credentials" });
+//   const access_token = generateToken(user);
+//   res.send({ status: "success", access_token });
+// });
+
+// router.get("/current", authToken, (req, res) => {
+//   res.send({ status: "success", payload: req.user });
+// });
+
 router.post("/loginJWT", (req, res) => {
   const { email, password } = req.body;
-  const user = users.find(
-    (user) => user.email === email && user.password === password
-  );
-  if (!user)
-    return res
-      .status(400)
-      .send({ status: "error", error: "Invalid credentials" });
-  const access_token = generateToken(user);
-  res.send({ status: "success", access_token });
+  console.log(req.body);
+  if (email == "admin@coder.com" && password == "CODER1234") {
+    let token = jwt.sign({ email, password /*role*/ }, "secretCode", {
+      expiresIn: "24h",
+    });
+
+    res.send({ message: "Inicio de sesión exitoso", token });
+  }
 });
 
-router.get("/current", authToken, (req, res) => {
-  res.send({ status: "success", payload: req.user });
-});
-// PRUEBA DE JWT
+router.get(
+  "/current",
+  passportCall("jwt"),
+  authorization("user"),
+  (req, res) => {
+    res.send(req.user);
+  }
+);
+
+// FIN DE JWT
 
 router.get("/failregister", async (req, res) => {
   console.log("Estrategia fallida");
@@ -72,6 +100,7 @@ router.post(
         last_name: req.user.last_name,
         email: req.user.email,
         age: req.user.age,
+        cart: req.user.cart,
         rol: req.user.rol,
       };
 

@@ -11,6 +11,8 @@ const sessionRouter = require("./routes/api/session.router.js");
 const viewsRouter = require("./routes/views.router.js");
 const dotenv = require("dotenv");
 const passport = require("passport");
+
+const { passportCall, authorization, generateToken } = require("./utils.js");
 const initializePassport = require("./config/passport.config.js");
 
 dotenv.config();
@@ -31,10 +33,11 @@ app.use(
     saveUninitialized: true,
   })
 );
+
 initializePassport();
 app.use(passport.initialize());
 app.use(passport.session());
-
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "/public"));
