@@ -74,7 +74,8 @@ router.post("/carts/:cid/products/:pid", async (req, res) => {
 */
 
 router.put("/carts/:cid/products/:pid", async (req, res) => {
-  let { quantity } = req.body;
+  // let { quantity } = req.body;
+  // console.log(quantity);
 
   try {
     let { cid, pid } = req.params;
@@ -90,12 +91,13 @@ router.put("/carts/:cid/products/:pid", async (req, res) => {
         .status(404)
         .send({ Respuesta: "Producto no encontrado en el carrito" });
     } else {
-      existProduct.quantity += quantity;
+      existProduct.quantity++;
       let result = await cartModel.updateOne(
         { _id: cid },
         { products: cart.products }
       );
-      res.send({ cart });
+
+      res.redirect(`/carts/${cid}`);
     }
   } catch (error) {
     res.status(504).send(error);

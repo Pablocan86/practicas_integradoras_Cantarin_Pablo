@@ -5,6 +5,9 @@
       <div class="productInCart" data-id="{{../cart._id}}">
         <img class="imgProductCart" src="{{this.product.thumbnail}}" alt="" />
         <p>{{this.product.title}}</p>
+       <form action=""><button class="sumar" data-id="{{this.product._id}}">+</button>
+       <button class="restar">-</button></form>
+        
         <p>Cantidad: {{this.quantity}}</p>
         </button>
         <button class="deleteButton" data-id="{{this._id}}">Borrar</button>

@@ -63,6 +63,21 @@ a:hover {
   border: 1px solid blue;
 }
 
+.deleteButton {
+  background-color: rgb(240, 30, 65);
+  padding: 5px;
+  font-size: 1rem;
+  border: 1px solid red;
+  border-radius: 5px;
+  color: white;
+  margin: 5px;
+  cursor: pointer;
+}
+.deleteButton:hover {
+  background-color: white;
+  color: red;
+}
+
 .carritoVacio {
   display: flex;
   flex-direction: column;
