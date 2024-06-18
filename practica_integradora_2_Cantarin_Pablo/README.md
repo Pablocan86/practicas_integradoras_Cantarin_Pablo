@@ -2,7 +2,7 @@
 
 # <CENTER>SEGUNDA PRACTICA INTEGRADORA<CENTER>
 
-Para ejecutar posicionarse en
+Para ejecutar servidor:
 
 ```
 practicas_integradoras\practica_integradora_2_Cantarin_Pablo\npm start
