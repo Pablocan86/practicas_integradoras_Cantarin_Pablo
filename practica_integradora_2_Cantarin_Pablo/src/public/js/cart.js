@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
           method: "PUT",
         });
         console.log(response);
-        if (response.ok) {
+        if (response) {
           alert("Producto Sumado");
         } else {
           alert("No se puede agrear la unidad");
@@ -23,6 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   });
+
   deleteButtons.forEach((button) => {
     button.addEventListener("click", async () => {
       const productId = button.getAttribute("data-id");
