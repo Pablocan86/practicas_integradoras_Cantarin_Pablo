@@ -5,7 +5,7 @@
 Para ejecutar posicionarse en
 
 ```
-practicas_integradoras\practica_integradora_2_Cantarin_Pablo
+practicas_integradoras\practica_integradora_2_Cantarin_Pablo\npm start
 ```
 
 ### Dependencias necesarias:
