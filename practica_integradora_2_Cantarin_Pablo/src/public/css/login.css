@@ -25,7 +25,6 @@ main {
 }
 
 .loginForm {
- 
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   border-radius: 5px;
@@ -39,11 +38,11 @@ main {
   height: 100%;
   width: 350px;
 }
-.loginForm h2{
+.loginForm h2 {
   margin: 0px auto;
 }
-.avisoError{
-  color:red;
+.avisoError {
+  color: red;
   width: 100%;
   text-align: center;
   padding-top: 5px;
@@ -59,6 +58,7 @@ main {
   color: white;
   margin: 5px;
   cursor: pointer;
+  transition: all 500ms;
 }
 
 input {
@@ -84,6 +84,7 @@ input {
   border-radius: 5px;
   padding-top: 5px;
   color: blue;
+  transition: all 500ms;
 }
 .registro:hover {
   background-color: black;
@@ -102,7 +103,7 @@ input {
   padding-bottom: 5px;
 }
 
-.gitHub {
+.loginTerceros {
   padding-left: 5px;
   padding-right: 5px;
   text-decoration: none;
@@ -110,28 +111,18 @@ input {
   justify-content: center;
   align-items: center;
   gap: 30px;
-  background-color: blue;
-  border: 1px solid blue;
-  border-radius: 5px;
-}
-.gitHub {
-  width: 100%;
-  text-decoration: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 30px;
-  color: white;
-}
-.gitHub:hover {
-  background-color: white;
-  color: black;
 }
 
-.imgGitHub {
-  width: 30px;
-  height: 30px;
-  margin: 5px;
+.imgLogin {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: white;
+  padding: 5px;
+  transition: all 1000ms;
+}
+.imgLogin:hover {
+  box-shadow: 0px 0px 10px black;
 }
 
 .imgEcommerce {

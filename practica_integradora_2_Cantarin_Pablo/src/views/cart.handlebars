@@ -5,12 +5,13 @@
       <div class="productInCart" data-id="{{../cart._id}}">
         <img class="imgProductCart" src="{{this.product.thumbnail}}" alt="" />
         <p>{{this.product.title}}</p>
-       <form action=""><button class="sumar" data-id="{{this.product._id}}">+</button>
-       <button class="restar">-</button></form>
-        
-        <p>Cantidad: {{this.quantity}}</p>
-        </button>
-        <button class="deleteButton" data-id="{{this._id}}">Borrar</button>
+      <div class="productsQuantity">
+        <button class="sumar addButton" data-id="{{this.product._id}}">+</button>
+         <p>Cantidad: {{this.quantity}}</p>
+        <button class="deleteButton" data-id="{{this.product._id}}">-</button>
+       </div>
+       
+        {{!-- <button class="deleteButton" data-id="{{this._id}}">Borrar</button> --}}
        </div>
     {{/each}}
   {{else}}
