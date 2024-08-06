@@ -13,9 +13,9 @@ router.get("/login", isNotAuthenticated, (req, res) => {
 
 router.get("/changepassword", sessionController.changePasswordGet);
 
-router.post("/changepassword", sessionController.changePasswordPut);
+router.post("/changepassword", sessionController.changePasswordPost);
 
-router.get("/prueba", sessionController.prueba);
+router.get("/reset_password", sessionController.reset_password);
 
 router.get("/userregistrade", (req, res) => {
   res.render("registrade", {

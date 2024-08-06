@@ -13,16 +13,22 @@ const PRIVATE_KEY = "CoderKeyQueFuncionaComoUnSecret";
 const users = [];
 
 router.post(
-  "/register",passport.authenticate("register", {
-    failureRedirect: "failregister"}),sessionController.register)
+  "/register",
+  passport.authenticate("register", {
+    failureRedirect: "failregister",
+  }),
+  sessionController.register
+);
 
-router.get("/failregister",sessionController.failregister );
+router.get("/failregister", sessionController.failregister);
 
 router.post(
   "/login",
   passport.authenticate("login", { failureRedirect: "faillogin" }),
   sessionController.login
 );
+
+router.put("/change_password", sessionController.changePasswordPut);
 
 router.get("/current", sessionController.current);
 

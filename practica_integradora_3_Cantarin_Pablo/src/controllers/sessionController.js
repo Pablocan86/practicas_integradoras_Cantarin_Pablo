@@ -1,12 +1,15 @@
 const passport = require("passport");
 const userDTO = require("../dao/DTOs/user.dto");
+const { createHash } = require("../utils.js");
 const nodemailer = require("nodemailer");
 const { devLogger, prodLogger } = require("../middleware/logger.js");
 const dotenv = require("dotenv");
 const { v4: uuidv4 } = require("uuid");
 const TokenManager = require("../dao/classes/token.dao.js");
+const UserManager = require("../dao/classes/user.dao.js");
 
-const tokenManager = new TokenManager();
+const tokenService = new TokenManager();
+const userService = new UserManager();
 
 dotenv.config();
 
@@ -62,36 +65,50 @@ exports.changePasswordGet = async (req, res) => {
   res.render("changePassword");
 };
 
-exports.changePasswordPut = async (req, res) => {
+exports.changePasswordPost = async (req, res) => {
   let correo = req.body.correo;
   let token = uuidv4();
   let expirationTime = Date.now() + 3600 * 1000;
   let newToken = {
     token: token,
+    email: correo,
     expirationTime: expirationTime,
   };
-  await tokenManager.createToken(newToken);
+  await tokenService.createToken(newToken);
 
   let mail = await transport.sendMail({
     from: "pablo.cantarin86@gmail.com",
     to: correo,
-    subjet: "Probando link",
-    text: `http://localhost:8080/prueba?token=${token}`,
+    subject: "Restablecimiento de contraseña",
+    text: `http://localhost:8080/reset_password?token=${token}`,
   });
-  res.send({ message: "Correo enviado" });
+  res.send({
+    message: `Correo enviado, ingrese a ${correo} y entre al enlace`,
+  });
 };
 
-exports.prueba = async (req, res) => {
+exports.reset_password = async (req, res) => {
   const token = req.query.token;
-  let existToken = await tokenManager.getToken(token);
-
+  let existToken = await tokenService.getToken(token);
   let currentTime = Date.now();
   if (currentTime > existToken.expirationTime) {
     res.send({ message: "Link expiró" });
   } else {
-    res.render("prueba", { token: token });
+    res.render("resetPassword", { token: token, correo: existToken.email });
   }
 };
+
+exports.changePasswordPut = async (req, res) => {
+  const { correo, password } = req.body;
+  try {
+    let newPassword = createHash(password);
+    let change = { password: newPassword };
+    await userService.updateUser(correo, change);
+
+    res.send({ message: "contraseña modificada" });
+  } catch (error) {}
+};
+
 exports.current = async (req, res) => {
   try {
     if (req.session.user) {
