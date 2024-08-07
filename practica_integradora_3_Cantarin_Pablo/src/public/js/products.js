@@ -19,10 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
           if (response.ok) {
             alert("Producto eliminado exitosamente");
-            // Opcional: remover el elemento del DOM
-            button.parentElement.parentElement.remove();
-          } else {
-            alert("Error al eliminar el producto");
+            window.location.reload();
           }
         } catch (error) {
           alert("Error de red al intentar eliminar el producto");

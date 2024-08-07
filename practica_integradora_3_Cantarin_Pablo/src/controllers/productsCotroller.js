@@ -182,6 +182,7 @@ exports.addProductToBD = async (req, res) => {
         "admin"
       );
       res.render("productsManager", result);
+      return;
     }
     await productService.addProduct(
       title,
@@ -275,11 +276,30 @@ exports.updateProductToDB = async (req, res) => {
 
 exports.deleteProductToDB = async (req, res) => {
   let { uid } = req.params;
-
+  let { email, rol } = req.session.user;
   try {
-    await productService.deleteProduct(uid);
+    const product = await productService.getProductById(uid);
+    if (rol === "premium") {
+      if (product.owner === email) {
+        await productService.deleteProduct(uid);
+        devLogger.debug("Producto eliminado por premium");
 
-    res.render("productsManager");
+        return res
+          .status(200)
+          .json({ message: "Producto eliminado exitosamente" });
+      } else {
+        devLogger.debug(
+          "No puede eliminar este producto por no ser propietario"
+        );
+        res.redirect("/productsManager");
+        return;
+      }
+    }
+    if (rol === "admin") {
+      await productService.deleteProduct(uid);
+    }
+    devLogger.debug("Producto eliminado por administrador");
+    return res.status(200).json({ message: "Producto eliminado exitosamente" });
   } catch (error) {
     if (
       error.message === "No se encuentra producto con es id en la base de datos"

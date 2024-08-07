@@ -87,12 +87,10 @@ class ProductManager {
     await productModel.findByIdAndUpdate(id, actualizaciones);
   }
   async deleteProduct(id) {
-    const products = await productModel.find();
-    const exist = products.find((prod) => prod.id === id);
-    if (exist) {
+    try {
       await productModel.deleteOne({ _id: id });
-      console.log("Producto borrado correctamente");
-    } else {
+      return;
+    } catch {
       throw Error("No se encuentra producto con es id en la base de datos");
     }
   }
