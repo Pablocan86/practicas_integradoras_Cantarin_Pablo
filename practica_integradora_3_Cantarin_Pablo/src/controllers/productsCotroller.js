@@ -8,7 +8,7 @@ const cartService = new cartManager();
 const CustomError = require("../services/errors/CustomErrors.js");
 const EErrors = require("../services/errors/enum.js");
 const { iqualCode } = require("../services/errors/info.js");
-
+const { devLogger } = require("../middleware/logger.js");
 exports.mockingProducts = async (req, res) => {
   let products = [];
   for (let i = 0; i < 100; i++) {
@@ -155,6 +155,7 @@ exports.productsAdmin = async (req, res) => {
 };
 
 exports.addProductToBD = async (req, res) => {
+  let { email, rol } = req.session.user;
   let { title, description, price, thumbnail, code, status, category, stock } =
     req.body;
   let page = parseInt(req.query.page);
@@ -168,6 +169,20 @@ exports.addProductToBD = async (req, res) => {
   result.user = req.session.user;
 
   try {
+    if (rol === "admin") {
+      await productService.addProduct(
+        title,
+        description,
+        price,
+        thumbnail,
+        code,
+        status,
+        category,
+        stock,
+        "admin"
+      );
+      res.render("productsManager", result);
+    }
     await productService.addProduct(
       title,
       description,
@@ -176,7 +191,8 @@ exports.addProductToBD = async (req, res) => {
       code,
       status,
       category,
-      stock
+      stock,
+      email
     );
 
     res.render("productsManager", result);
@@ -220,33 +236,39 @@ exports.getUpdateProduct = async (req, res) => {
 };
 
 exports.updateProductToDB = async (req, res) => {
+  let { email, rol } = req.session.user;
   let { uid } = req.params;
   let { title, description, price, thumbnail, code, status, category, stock } =
     req.body;
 
   try {
-    const products = await productService.onlyGetProducts();
-    const productoEncontrado = products.find((prod) => prod.id === uid);
-
+    // const products = await productService.onlyGetProducts();
+    // const productoEncontrado = products.find((prod) => prod.id === uid);
+    const product = await productService.getProductById(uid);
+    if (!product) {
+      return res.status(404).json({ error: "Producto no encontrado" });
+    }
     //Creo el objeto nuevo para agregar con las opciones para que no se borre ninguna propiedad de no pasarla como parámetro
     const productoActualizado = {
-      _id: productoEncontrado._id,
-      title: title || productoEncontrado.title,
-      description: description || productoEncontrado.description,
-      price: price || productoEncontrado.price,
-      thumbnail: thumbnail || productoEncontrado.thumbnail,
-      code: code || productoEncontrado.code,
-      status: productoEncontrado.status,
-      category: category || productoEncontrado.category,
-      stock: stock || productoEncontrado.stock,
+      _id: product._id,
+      title: title || product.title,
+      description: description || product.description,
+      price: price || product.price,
+      thumbnail: thumbnail || product.thumbnail,
+      code: code || product.code,
+      status: product.status,
+      category: category || product.category,
+      stock: stock || product.stock,
     };
     const result = await productService.updateProduct(productoActualizado);
-    const actualizate = await productService.getCartById(uid);
-    result.agregado = "Producto actualizado";
-    res.render("updateProduct", result);
+    if (!result) {
+      return res.status(500).json({ error: "Error al actualizar el producto" });
+    }
+    res.redirect("/updateProduct");
   } catch (error) {
+    console.error(error);
     res
-      .status(401)
+      .status(500)
       .json({ error: "Ocurrió un error al procesar la solicitud" });
   }
 };

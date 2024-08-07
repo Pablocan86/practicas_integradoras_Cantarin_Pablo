@@ -67,6 +67,7 @@ exports.changePasswordGet = async (req, res) => {
 
 exports.changePasswordPost = async (req, res) => {
   let correo = req.body.correo;
+  let user = await userService.getUserByEmail(correo);
   let token = uuidv4();
   let expirationTime = Date.now() + 3600 * 1000;
   let newToken = {
@@ -80,10 +81,43 @@ exports.changePasswordPost = async (req, res) => {
     from: "pablo.cantarin86@gmail.com",
     to: correo,
     subject: "Restablecimiento de contraseña",
-    text: `http://localhost:8080/reset_password?token=${token}`,
+    html: `  <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title><style>
+      body {
+        font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+          "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+
+      h1 {
+        background-color: black;
+        width: 100%;
+        color: white;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>RESTABLECIMIENTO DE CONTRASEÑA</h1>
+    <p>Hola ${user.first_name}!</p>
+    <div>
+      <p>Ingresa al siguiente link:</p>
+      <p>http://localhost:8080/reset_password?token=${token}</p>
+    </div>
+  </body>
+  </html>
+`,
   });
-  res.send({
-    message: `Correo enviado, ingrese a ${correo} y entre al enlace`,
+  let login = "/login";
+  res.render("changePassword", {
+    aviso: `Correo enviado a ${correo}`,
+    link: login,
   });
 };
 

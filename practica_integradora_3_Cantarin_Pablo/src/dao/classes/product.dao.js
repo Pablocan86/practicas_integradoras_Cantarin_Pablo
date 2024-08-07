@@ -31,7 +31,8 @@ class ProductManager {
     code,
     status,
     category,
-    stock
+    stock,
+    owner
   ) {
     const products = await productModel.find();
     if (
@@ -60,8 +61,8 @@ class ProductManager {
       status,
       category,
       stock,
+      owner,
     });
-    return console.log("Producto Agregado correctamente");
   }
 
   async updateProduct(productoActualizado) {

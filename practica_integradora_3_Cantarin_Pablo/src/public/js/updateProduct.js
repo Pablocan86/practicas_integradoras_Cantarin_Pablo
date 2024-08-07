@@ -10,23 +10,21 @@ document.addEventListener("DOMContentLoaded", () => {
       try {
         const formData = new FormData(form);
         const formDataObj = Object.fromEntries(formData.entries());
-        form.addEventListener("submit", async (e) => {
-          e.preventDefault();
-          const response = await fetch(`/${idProduct.textContent}`, {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(formDataObj),
-          });
 
-          if (response.ok) {
-            alert("Producto actualizado correctamente");
-          } else {
-            const errorData = await response.text();
-            console.log("Error al actualizar", errorData);
-          }
+        const response = await fetch(`/${idProduct.textContent}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formDataObj),
         });
+
+        if (response.ok) {
+          alert("Producto actualizado correctamente");
+        } else {
+          const errorData = await response.text();
+          console.log("Error al actualizar", errorData);
+        }
       } catch (error) {
         console.log("No se ha actualizado", error);
       }

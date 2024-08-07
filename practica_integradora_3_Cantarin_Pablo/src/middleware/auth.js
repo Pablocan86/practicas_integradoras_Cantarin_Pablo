@@ -1,5 +1,5 @@
 const isAuthenticated = (req, res, next) => {
-  if (req.session.user) {
+  if (req.session.user && req.session.user) {
     return next();
   } else {
     res.redirect("/login");
@@ -15,7 +15,8 @@ const isNotAuthenticated = (req, res, next) => {
 };
 
 const isAdmin = (req, res, next) => {
-  if (req.session.user.rol === "admin") {
+  const { rol } = req.session.user;
+  if (rol === "admin" || rol === "premium") {
     return next();
   } else {
     res.redirect("/products");
