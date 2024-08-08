@@ -16,6 +16,15 @@ const isNotAuthenticated = (req, res, next) => {
 
 const isAdmin = (req, res, next) => {
   const { rol } = req.session.user;
+  if (rol === "admin") {
+    return next();
+  } else {
+    res.redirect("/products");
+  }
+};
+
+const isAdminOrPremium = (req, res, next) => {
+  const { rol } = req.session.user;
   if (rol === "admin" || rol === "premium") {
     return next();
   } else {
@@ -35,5 +44,6 @@ module.exports = {
   isAuthenticated,
   isNotAuthenticated,
   isAdmin,
+  isAdminOrPremium,
   isUser,
 };

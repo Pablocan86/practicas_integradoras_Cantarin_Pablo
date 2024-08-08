@@ -19,8 +19,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
           if (response.ok) {
             alert("Producto eliminado exitosamente");
-            window.location.reload();
           }
+          window.location.reload();
         } catch (error) {
           alert("Error de red al intentar eliminar el producto");
         }

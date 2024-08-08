@@ -1,0 +1,11 @@
+<div>
+  <div><p>USUARIO: {{user.email}}</p>
+    <p style="font-variant-caps: all-petite-caps;">ROL: {{user.rol}}</p>
+  </div>
+  <form action="./{{user._id}}" method="GET">
+    <button class="changeButton">CAMBIAR ROL</button>
+  </form>
+
+</div>
+
+<script src="/js/changeRol.js"></script>

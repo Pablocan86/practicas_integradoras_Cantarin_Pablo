@@ -6,6 +6,7 @@ const {
   isAuthenticated,
   isNotAuthenticated,
   isAdmin,
+  isAdminOrPremium,
 } = require("../middleware/auth.js");
 
 router.get("/mockingproducts", productsController.mockingProducts);
@@ -17,7 +18,7 @@ router.get("/productDetails/:pid", productsController.productDetails);
 router.get(
   "/productsManager",
   isAuthenticated,
-  isAdmin,
+  isAdminOrPremium,
   productsController.productsAdmin
 );
 

@@ -10,6 +10,7 @@ const cartsRouter = require("./routes/carts.router.js");
 const messageRouter = require("./routes/messages.router.js");
 const sessionRouter = require("./routes/api/session.router.js");
 const viewsRouter = require("./routes/views.router.js");
+const usersRouter = require("./routes/users.router.js");
 const dotenv = require("dotenv");
 const passport = require("passport");
 const nodemailer = require("nodemailer");
@@ -107,6 +108,7 @@ app.use("/", viewsRouter);
 app.use("/", productsRouter);
 app.use("/carts", cartsRouter);
 app.use("/", messageRouter);
+app.use("/api/users", usersRouter);
 app.use(errorHandler);
 
 app.listen(PORT, `0.0.0.0`, () =>

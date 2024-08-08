@@ -25,6 +25,8 @@ document.addEventListener("DOMContentLoaded", () => {
           const errorData = await response.text();
           console.log("Error al actualizar", errorData);
         }
+
+        window.location.reload();
       } catch (error) {
         console.log("No se ha actualizado", error);
       }

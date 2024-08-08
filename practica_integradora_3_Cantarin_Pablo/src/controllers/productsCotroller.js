@@ -181,6 +181,7 @@ exports.addProductToBD = async (req, res) => {
         stock,
         "admin"
       );
+
       res.render("productsManager", result);
       return;
     }
@@ -243,8 +244,6 @@ exports.updateProductToDB = async (req, res) => {
     req.body;
 
   try {
-    // const products = await productService.onlyGetProducts();
-    // const productoEncontrado = products.find((prod) => prod.id === uid);
     const product = await productService.getProductById(uid);
     if (!product) {
       return res.status(404).json({ error: "Producto no encontrado" });
@@ -262,10 +261,8 @@ exports.updateProductToDB = async (req, res) => {
       stock: stock || product.stock,
     };
     const result = await productService.updateProduct(productoActualizado);
-    if (!result) {
-      return res.status(500).json({ error: "Error al actualizar el producto" });
-    }
-    res.redirect("/updateProduct");
+
+    return res.status(200).json({ message: "Producto eliminado exitosamente" });
   } catch (error) {
     console.error(error);
     res
@@ -291,6 +288,7 @@ exports.deleteProductToDB = async (req, res) => {
         devLogger.debug(
           "No puede eliminar este producto por no ser propietario"
         );
+
         res.redirect("/productsManager");
         return;
       }
