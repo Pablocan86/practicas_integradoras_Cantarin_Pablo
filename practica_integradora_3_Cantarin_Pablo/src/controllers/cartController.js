@@ -65,20 +65,29 @@ exports.getCartById = async (req, res) => {
 exports.addToCart = async (req, res) => {
   let { cid, pid } = req.params;
   let user = req.session.user;
+  let product = await productService.getProductById(pid);
+
   try {
+    if (user.email === product.owner) {
+      return res
+        .status(202)
+        .json({ message: "No se puede agregar un producto suyo" });
+    }
     if (user.rol === "admin") {
       devLogger.info(
         "Rol de administador, no puede agregar productos al carrito"
       );
-      res.redirect("/products");
+      return res.redirect("/products");
     }
-    if (user.rol === "user") {
+
+    if (user.rol === "user" || user.rol === "premium") {
       await cartService.addToCart(pid, cid);
-      res.redirect("/products");
+      return res.redirect("/products");
     }
+    return res.redirect("/products");
   } catch (error) {
     prodLogger.error("Imposibilidad de agregar productos al cerrito: " + error);
-    res.status(500).send("Error de conexión");
+    return res.status(500).send("Error de conexión");
   }
 };
 

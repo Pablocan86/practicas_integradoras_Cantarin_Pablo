@@ -18,12 +18,17 @@ exports.putRolUser = async (req, res) => {
     if (user.rol === "premium") {
       const newRol = { rol: "user" };
       await userService.updateUserRol(user.email, newRol);
-      return;
+
+      return res
+        .status(202)
+        .json({ message: `Se cambio rol de usuario a ${newRol.rol}` });
     }
     if (user.rol === "user") {
       const newRol = { rol: "premium" };
       await userService.updateUserRol(user.email, newRol);
-      return;
+      return res
+        .status(202)
+        .json({ message: `Se cambio rol de usuario a ${newRol.rol}` });
     }
     res.redirect(`/premium/${uid}`);
   } catch (error) {

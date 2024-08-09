@@ -11,9 +11,16 @@ document.addEventListener("DOMContentLoaded", () => {
       try {
         const response = await fetch(`/carts/${cartId}/products/${productId}`, {
           method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
         });
-        if (response) {
+
+        const result = await response.json();
+        if (response.ok) {
+          alert(result.message);
           window.location.reload();
+          return;
         } else {
           alert("No se puede agrear la unidad");
         }
@@ -33,8 +40,9 @@ document.addEventListener("DOMContentLoaded", () => {
           method: "DELETE",
         });
 
-        if (response) {
+        if (response.ok) {
           window.location.reload();
+          return;
           // Opcional: remover el elemento del DOM
           // button.parentElement.remove();
         } else {

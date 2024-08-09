@@ -1,11 +1,10 @@
 <div>
-  <div><p>USUARIO: {{user.email}}</p>
+  <div>
+    <p>USUARIO: {{user.email}}</p>
     <p style="font-variant-caps: all-petite-caps;">ROL: {{user.rol}}</p>
   </div>
-  <form action="./{{user._id}}" method="GET">
-    <button class="changeButton">CAMBIAR ROL</button>
-  </form>
 
+  <button class="changeButton" data-id="{{user._id}}">CAMBIAR ROL</button>
 </div>
 
 <script src="/js/changeRol.js"></script>
