@@ -32,6 +32,6 @@ document
       alert("Contraseña cambiada con éxito.");
       window.location.href = `/login`;
     } else {
-      alert("Error al cambiar la contraseña.");
+      alert("Esta intentando usar la misma contraseña que ya tiene");
     }
   });

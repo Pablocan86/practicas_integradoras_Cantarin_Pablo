@@ -1,6 +1,6 @@
 const passport = require("passport");
 const userDTO = require("../dao/DTOs/user.dto");
-const { createHash } = require("../utils.js");
+const { createHash, isValidPassword } = require("../utils.js");
 const nodemailer = require("nodemailer");
 const { devLogger, prodLogger } = require("../middleware/logger.js");
 const dotenv = require("dotenv");
@@ -126,7 +126,7 @@ exports.reset_password = async (req, res) => {
   let existToken = await tokenService.getToken(token);
   let currentTime = Date.now();
   if (currentTime > existToken.expirationTime) {
-    res.send({ message: "Link expiró" });
+    res.redirect("/changePassword");
   } else {
     res.render("resetPassword", { token: token, correo: existToken.email });
   }
@@ -134,13 +134,27 @@ exports.reset_password = async (req, res) => {
 
 exports.changePasswordPut = async (req, res) => {
   const { correo, password } = req.body;
-  try {
-    let newPassword = createHash(password);
-    let change = { password: newPassword };
-    await userService.updateUser(correo, change);
 
-    res.send({ message: "contraseña modificada" });
-  } catch (error) {}
+  try {
+    let user = await userService.getUserByEmail(correo);
+    let isSamePassword = isValidPassword(user, password);
+    if (isSamePassword) {
+      return res
+        .status(400)
+        .json({ message: "No se puede utilizar la misma contraseña" });
+    } else {
+      let newPassword = createHash(password);
+      let change = { password: newPassword };
+      await userService.updateUser(correo, change);
+
+      return res
+        .status(200)
+        .json({ message: "Contraseña actualizada correctamente" });
+    }
+  } catch (error) {
+    console.error("Error al cambiar la contraseña:", error);
+    return res.status(500).json({ message: "Error interno del servidor" });
+  }
 };
 
 exports.current = async (req, res) => {
