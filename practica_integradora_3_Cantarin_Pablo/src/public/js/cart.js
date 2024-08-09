@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (response.ok) {
           window.location.reload();
           return;
-          // Opcional: remover el elemento del DOM
+          //remover el elemento del DOM
           // button.parentElement.remove();
         } else {
           alert("Error al eliminar el producto");

@@ -14,7 +14,6 @@ class UserManager {
 
   async updateUser(correo, password) {
     await userModel.updateOne({ email: correo }, password);
-    // await userModel.updateOne(correo, password);
   }
 
   async updateUserRol(correo, rol) {

@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
           if (response.ok) {
             alert("Mensaje eliminado exitosamente");
-            // Opcional: remover el elemento del DOM
+
             span.parentElement.remove();
           } else {
             alert("Error al eliminar el mensaje");
