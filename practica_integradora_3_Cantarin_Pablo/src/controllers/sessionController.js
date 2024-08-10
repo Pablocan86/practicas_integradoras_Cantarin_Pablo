@@ -62,7 +62,7 @@ exports.login = async (req, res) => {
 };
 
 exports.changePasswordGet = async (req, res) => {
-  res.render("changePassword");
+  res.render("changePassword", { style: "requireEmail.css" });
 };
 
 exports.changePasswordPost = async (req, res) => {
@@ -116,7 +116,9 @@ exports.changePasswordPost = async (req, res) => {
   });
   let login = "/login";
   res.render("changePassword", {
-    aviso: `Correo enviado a ${correo}`,
+    gracias: "Gracias",
+    aviso: `Revisa tu correo ${correo}`,
+    style: "requireEmail.css",
     link: login,
   });
 };
@@ -128,7 +130,11 @@ exports.reset_password = async (req, res) => {
   if (currentTime > existToken.expirationTime) {
     res.redirect("/changePassword");
   } else {
-    res.render("resetPassword", { token: token, correo: existToken.email });
+    res.render("resetPassword", {
+      token: token,
+      correo: existToken.email,
+      style: "resetPassword.css",
+    });
   }
 };
 

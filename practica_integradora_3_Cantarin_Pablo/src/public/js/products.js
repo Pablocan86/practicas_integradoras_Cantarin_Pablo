@@ -16,11 +16,14 @@ document.addEventListener("DOMContentLoaded", () => {
               "Content-Type": "application/json",
             },
           });
-
+          const result = await response.json();
           if (response.ok) {
-            alert("Producto eliminado exitosamente");
+            alert(result.message);
+            window.location.reload();
+          } else {
+            const errorData = await response.text();
+            console.log("Error al cambiar rol", errorData);
           }
-          window.location.reload();
         } catch (error) {
           alert("Error de red al intentar eliminar el producto");
         }

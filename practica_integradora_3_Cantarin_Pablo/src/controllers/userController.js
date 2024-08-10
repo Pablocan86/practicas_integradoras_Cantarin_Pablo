@@ -2,6 +2,12 @@ const UserManager = require("../dao/classes/user.dao.js");
 
 const userService = new UserManager();
 
+exports.getUsers = async (req, res) => {
+  try {
+    let users = await userService.getUsers();
+    res.render("users", { users: users });
+  } catch (error) {}
+};
 exports.getUser = async (req, res) => {
   let { uid } = req.params;
   try {

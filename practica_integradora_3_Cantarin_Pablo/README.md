@@ -42,11 +42,21 @@ Si el rol es admin puede eliminar cualquier producto si es Premium solo los que 
 
 **CAMBIO ROL DE USUARIO**
 
+Solo el que tiene rol admin puede entrar a estos endpoints
+
+```
+GET: http://localhost:8080/api/users
+```
+
+Muestra todos los usuarios
+
+---
+
 ```
 GET: http://localhost:8080/api/users/premium/:uid
 ```
 
-Solo el que tiene rol admin puede entrar a este endpoint
+Muestra solo el usuario seleccionado
 
 ---
 

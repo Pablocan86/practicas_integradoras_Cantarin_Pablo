@@ -288,27 +288,24 @@ exports.deleteProductToDB = async (req, res) => {
         devLogger.debug(
           "No puede eliminar este producto por no ser propietario"
         );
-
-        res.redirect("/productsManager");
-        return;
+        return res
+          .status(202)
+          .json({ message: `Usted no puede eliminar este producto` });
+        // res.redirect("/productsManager");
+        // return;
       }
     }
     if (rol === "admin") {
       await productService.deleteProduct(uid);
+      devLogger.debug("Producto eliminado por administrador");
+      return res
+        .status(200)
+        .json({ message: "Producto eliminado exitosamente" });
     }
-    devLogger.debug("Producto eliminado por administrador");
-    return res.status(200).json({ message: "Producto eliminado exitosamente" });
+    res.redirect("/productsManager");
   } catch (error) {
-    if (
-      error.message === "No se encuentra producto con es id en la base de datos"
-    ) {
-      res.status(400).json({
-        error: `No se encuentra producto con ID: ${uid} en la base de datos`,
-      });
-    } else {
-      res
-        .status(500)
-        .json({ error: "Ocurrió un error al procesar la solicitud" });
-    }
+    return res
+      .status(500)
+      .json({ message: "Ocurrió un error al procesar la solicitud" });
   }
 };

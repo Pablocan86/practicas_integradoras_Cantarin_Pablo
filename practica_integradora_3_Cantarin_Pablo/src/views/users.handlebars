@@ -1,0 +1,14 @@
+<div
+  style="display: flex; flex-direction:row;flex-wrap:wrap;aling-items:center;justify-content:space-around"
+>{{#each users}}
+    <div
+      style="border:1px solid black; width:200px;heigth:200px; display:flex;flex-direction:column;justify-content:space-around; align-items:center;margin:10px;"
+    >
+      <p>Nombre: {{this.first_name}}</p>
+      <p>Apellido: {{this.last_name}}</p>
+      <p>Rol: "{{this.rol}}"</p>
+      <form action="./premium/{{this._id}}" method="GET"><button
+        >Ver</button></form>
+    </div>
+  {{/each}}
+</div>

@@ -3,6 +3,11 @@ const userModel = require("../models/users.model.js");
 class UserManager {
   constructor() {}
 
+  async getUsers() {
+    let users = userModel.find().lean();
+    return users;
+  }
+
   async getUserById(id) {
     let user = userModel.findById(id).lean();
     return user;

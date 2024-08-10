@@ -8,6 +8,7 @@ const {
   isAdmin,
 } = require("../middleware/auth.js");
 
+router.get("/", isAuthenticated, isAdmin, userController.getUsers);
 router.get("/premium/:uid", isAuthenticated, isAdmin, userController.getUser);
 
 router.put("/premium/:uid", userController.putRolUser);
