@@ -1,0 +1,17 @@
+<div class="header">
+  <h2>PERFIL</h2></div>
+<div class="datos">
+  {{#if user}}
+  <p>Usuario: {{this.full_name}}</p>
+  {{else}}
+  <p>{{./error}}</p>
+  {{/if}}
+</div>
+{{#if user}}
+<form action="/api/sessions/logout" method="POST">
+  <button class="cerrarSesion" type="submit">Cerrar Sesión</button>
+</form>
+{{else}}
+<form action="/login" method="GET">
+<button class="login">INICIAR SESION</button></form>
+{{/if}}

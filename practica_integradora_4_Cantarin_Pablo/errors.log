@@ -1,0 +1,13 @@
+
+2024-08-03T20:59:34.047Z - info: Rol de administador, no puede agregar productos al cerrito
+2024-08-03T21:08:40.963Z - info: Debe completar los campos
+2024-08-03T21:10:26.005Z - info: Esto es un looger info de producción
+2024-08-03T21:10:29.531Z - warning: Esto es un looger warning de producción
+2024-08-03T21:10:30.636Z - error: Esto es un looger error de producción
+2024-08-03T21:10:33.077Z - fatal: Esto es un looger fatal de producción
+2024-08-06T20:19:18.694Z - error: No se puede actualizar constraseñaCastError: Cast to ObjectId failed for value "pablo.cantarin86@gmail.com" (type string) at path "_id" for model "Users"
+2024-08-06T20:20:41.668Z - error: No se puede actualizar constraseñaCastError: Cast to ObjectId failed for value "pablo.cantarin86@gmail.com" (type string) at path "_id" for model "Users"
+2024-08-06T20:21:20.277Z - error: No se puede actualizar constraseñaCastError: Cast to ObjectId failed for value "pablo.cantarin86@gmail.com" (type string) at path "_id" for model "Users"
+2024-08-06T20:21:24.865Z - error: No se puede actualizar constraseñaCastError: Cast to ObjectId failed for value "pablo.cantarin86@gmail.com" (type string) at path "_id" for model "Users"
+2024-08-06T20:23:32.352Z - error: No se puede actualizar constraseñaTypeError: userService.getUserAndUpdatePassword is not a function
+2024-08-09T00:57:06.031Z - error: Imposibilidad de agregar productos al cerrito: Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client

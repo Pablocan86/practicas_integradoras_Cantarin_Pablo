@@ -1,0 +1,16 @@
+<section class="sectionProducts"><h2>USUARIOS REGISTRADOS</h2>
+  <div class="productsContainer">
+    {{#each users}}
+      <div class="cardProduct">
+        <p>Nombre: {{this.first_name}}</p>
+        <p>Apellido: {{this.last_name}}</p>
+        <p>Rol: "{{this.rol}}"</p>
+        <form action="/api/users/premium/{{this._id}}" method="GET"><button
+          >Ver</button></form>
+      </div>
+
+    {{/each}}
+
+  </div>
+  <a href="../productsManager">Volver</a>
+</section>
