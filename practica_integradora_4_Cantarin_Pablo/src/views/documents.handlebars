@@ -1,0 +1,24 @@
+<h1>DOCUMENTACION</h1>
+<div class="divForm"><form
+    class="formDocuments"
+    action="/api/users/documents"
+    method="post"
+    enctype="multipart/form-data"
+  >
+    <label for="identification">DNI
+      <input type="file" id="identification" name="identification" /></label>
+    <label for="adressVerification">Comprobante de domicilio
+      <input
+        type="file"
+        id="adressVerification"
+        name="adressVerification"
+      /></label>
+    <label for="accountStatement">Comprobante de cuenta
+      <input
+        type="file"
+        id="accountStatement"
+        name="accountStatement"
+      /></label>
+    <button type="submit">Subir archivo</button>
+  </form>
+</div>

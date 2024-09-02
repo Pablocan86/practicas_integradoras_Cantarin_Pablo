@@ -15,6 +15,7 @@ const sessionRouter = require("./routes/api/session.router.js");
 const viewsRouter = require("./routes/views.router.js");
 const usersRouter = require("./routes/users.router.js");
 
+const upload = require("./middleware/multer.js");
 const dotenv = require("dotenv");
 const passport = require("passport");
 const nodemailer = require("nodemailer");
