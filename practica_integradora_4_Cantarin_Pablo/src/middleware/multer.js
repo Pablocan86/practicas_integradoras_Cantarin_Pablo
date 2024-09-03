@@ -3,7 +3,7 @@ const path = require("path");
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, path.join(__dirname, "../../src/descargas"));
+    cb(null, path.join(__dirname, "../../src/documents"));
   },
   filename: (req, file, cb) => {
     const email = req.session.user.email;

@@ -13,10 +13,7 @@ const {
 router.get("/", isAuthenticated, isAdmin, userController.getUsers);
 router.get("/premium/:uid", isAuthenticated, isAdmin, userController.getUser);
 
-router.get("/documents", (req, res) => {
-  // res.json({ message: __dirname });
-  res.render("documents", { style: "documents.css" });
-});
+router.get("/documents", isAuthenticated, userController.getDocuments);
 
 router.post(
   "/documents",
@@ -25,18 +22,9 @@ router.post(
     { name: "adressVerification", maxCount: 1 },
     { name: "accountStatement", maxCount: 1 },
   ]),
-  (req, res) => {
-    res.json({ message: "Archivo subido exitosamente", files: req.files });
-  }
+  userController.postDocuments
 );
-// router.post("/upload", upload.single("myFile"), (req, res) => {
-//   if (req.file) {
-//     console.log("Archivo subido:", req.file);
-//     res.send("Archivo subido correctamente");
-//   } else {
-//     res.send("No se ha seleccionado ningún archivo");
-//   }
-// });
+
 router.put("/premium/:uid", userController.putRolUser);
 
 module.exports = router;

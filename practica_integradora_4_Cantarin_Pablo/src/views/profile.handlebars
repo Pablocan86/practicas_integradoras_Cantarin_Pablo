@@ -2,7 +2,10 @@
   <h2>PERFIL</h2></div>
 <div class="datos">
   {{#if user}}
-  <p>Usuario: {{this.full_name}}</p>
+  <p>Usuario: {{user.first_name}} {{user.last_name}}</p>
+  <p></p>
+  <p>Correo: {{user.email}}</p>
+  <a href="./api/users/documents">Cargar documentación</a>
   {{else}}
   <p>{{./error}}</p>
   {{/if}}

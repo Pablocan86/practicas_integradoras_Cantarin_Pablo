@@ -7,6 +7,7 @@ const {
   passportCall,
   authorization,
 } = require("../../utils.js");
+
 const router = express.Router();
 
 const PRIVATE_KEY = "CoderKeyQueFuncionaComoUnSecret";

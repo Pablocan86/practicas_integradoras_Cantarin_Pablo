@@ -4,9 +4,12 @@
 
     <div class="userInfo">
       {{#if user}}
+      <div>
         <p>¡Hola,
           {{user.first_name}}
           {{user.last_name}}!</p>
+          <a class="linkPerfil" href="../api/sessions/current">Ir a mi Perfil<span class="material-symbols-outlined">people</span></a>
+          </div>
           <p>Ultima conexión: {{user.last_connection}}</p>
 
       {{else}}

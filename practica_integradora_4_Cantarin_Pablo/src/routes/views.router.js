@@ -4,7 +4,7 @@ const {
   isNotAuthenticated,
 } = require("../middleware/auth.js");
 const sessionController = require("../controllers/sessionController.js");
-
+const userDTO = require("../dao/DTOs/user.dto");
 const router = express.Router();
 
 router.get("/login", isNotAuthenticated, (req, res) => {
@@ -29,7 +29,19 @@ router.get("/register", isNotAuthenticated, (req, res) => {
 });
 
 router.get("/profile", isAuthenticated, (req, res) => {
-  res.render("profile", { user: req.session.user });
+  try {
+    if (req.session.user) {
+      let user = new userDTO(req.session.user);
+      res.render("profile", { user: user, style: "profile.css" });
+    } else {
+      res.render("profile", {
+        style: "profile.css",
+        error: "No ha iniciado sesión",
+      });
+    }
+  } catch (error) {
+    prodLogger.warning("No ha iniciado sesión");
+  }
 });
 
 module.exports = router;

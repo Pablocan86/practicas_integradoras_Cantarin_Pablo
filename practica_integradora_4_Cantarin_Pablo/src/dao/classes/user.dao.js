@@ -17,6 +17,14 @@ class UserManager {
     return user;
   }
 
+  async postDocuments(email, documents) {
+    await userModel.findOneAndUpdate(
+      email,
+      { $push: { documents: { $each: documents } } },
+      { new: true }
+    );
+  }
+
   async updateUser(correo, propiedad) {
     await userModel.updateOne({ email: correo }, propiedad);
   }
