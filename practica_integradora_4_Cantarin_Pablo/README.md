@@ -41,5 +41,5 @@ GET: localhost:8080/api/users/documents
 > Requiere tres archivos
 
 ```
-POST: localhost:800/api/users/documents
+POST: localhost:8080/api/users/documents
 ```

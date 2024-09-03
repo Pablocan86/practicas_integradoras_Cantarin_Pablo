@@ -5,7 +5,7 @@ const userService = new UserManager();
 exports.getUsers = async (req, res) => {
   try {
     let users = await userService.getUsers();
-    res.render("users", { users: users, style: "products.css" });
+    res.render("users", { users: users, style: "users.css" });
   } catch (error) {}
 };
 exports.getUser = async (req, res) => {
@@ -13,7 +13,7 @@ exports.getUser = async (req, res) => {
   try {
     let user = await userService.getUserById(uid);
 
-    res.render("changeRol", { user: user, style: "products.css" });
+    res.render("changeRol", { user: user, style: "users.css" });
   } catch (error) {}
 };
 
