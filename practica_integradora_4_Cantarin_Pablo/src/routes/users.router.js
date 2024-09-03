@@ -13,10 +13,10 @@ const {
 router.get("/", isAuthenticated, isAdmin, userController.getUsers);
 router.get("/premium/:uid", isAuthenticated, isAdmin, userController.getUser);
 
-router.get("/documents", isAuthenticated, userController.getDocuments);
+router.get("/:uid/documents", isAuthenticated, userController.getDocuments);
 
 router.post(
-  "/documents",
+  "/:uid/documents",
   upload.fields([
     { name: "identification", maxCount: 1 },
     { name: "adressVerification", maxCount: 1 },

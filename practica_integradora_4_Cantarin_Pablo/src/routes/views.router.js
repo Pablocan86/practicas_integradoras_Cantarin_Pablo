@@ -30,9 +30,10 @@ router.get("/register", isNotAuthenticated, (req, res) => {
 
 router.get("/profile", isAuthenticated, (req, res) => {
   try {
+    let id = req.session.user.id;
     if (req.session.user) {
       let user = new userDTO(req.session.user);
-      res.render("profile", { user: user, style: "profile.css" });
+      res.render("profile", { user: user, style: "profile.css", id: id });
     } else {
       res.render("profile", {
         style: "profile.css",

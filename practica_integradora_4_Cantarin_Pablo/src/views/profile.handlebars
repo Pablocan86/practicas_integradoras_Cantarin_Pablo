@@ -5,7 +5,8 @@
   <p>Usuario: {{user.first_name}} {{user.last_name}}</p>
   <p></p>
   <p>Correo: {{user.email}}</p>
-  <a href="./api/users/documents">Cargar documentación</a>
+  <p class="rol">{{user.rol}}</p>
+  <a href="../../api/users/{{id}}/documents">Cargar documentación</a>
   {{else}}
   <p>{{./error}}</p>
   {{/if}}

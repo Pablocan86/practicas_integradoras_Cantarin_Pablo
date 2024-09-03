@@ -5,6 +5,7 @@ class UserDTO {
     this.last_name = user.last_name;
     this.active = true;
     this.email = user.email;
+    this.rol = user.rol;
   }
 }
 

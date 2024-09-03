@@ -50,11 +50,17 @@ exports.putRolUser = async (req, res) => {
 };
 
 exports.getDocuments = async (req, res) => {
-  res.render("documents", { style: "documents.css" });
+  const { uid } = req.params;
+  res.render("documents", {
+    style: "documents.css",
+    user: req.session.user,
+    id: uid,
+  });
 };
 
 exports.postDocuments = async (req, res) => {
-  const email = { email: req.user.email };
+  const { uid } = req.params;
+  const idUser = { _id: uid };
   const documents = [];
   for (let fieldname in req.files) {
     req.files[fieldname].forEach((file) => {
@@ -64,6 +70,11 @@ exports.postDocuments = async (req, res) => {
       });
     });
   }
-  await userService.postDocuments(email, documents);
-  res.json({ message: "Archivo subido exitosamente", files: req.files });
+  await userService.postDocuments(idUser, documents);
+  res.render("documents", {
+    style: "documents.css",
+    user: req.session.user,
+    id: uid,
+    message: "Documentación cargada correctamente",
+  });
 };

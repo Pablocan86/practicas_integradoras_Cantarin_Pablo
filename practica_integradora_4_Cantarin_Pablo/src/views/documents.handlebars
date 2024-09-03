@@ -1,7 +1,8 @@
 <h1>DOCUMENTACION</h1>
+<p>{{user.first_name}} {{user.last_name}}</p>
 <div class="divForm"><form
     class="formDocuments"
-    action="/api/users/documents"
+    action="/api/users/{{id}}/documents"
     method="post"
     enctype="multipart/form-data"
   >
@@ -20,6 +21,11 @@
         name="accountStatement"
       /></label>
     <button type="submit">Subir archivo</button>
+    {{#if message}}
+      <p>{{message}}</p>
+    {{else}}
+      <p></p>
+    {{/if}}
   </form>
-  <a href="../../profile">Volver a Perfil</a>
+  <a href="/profile">Volver a Perfil</a>
 </div>

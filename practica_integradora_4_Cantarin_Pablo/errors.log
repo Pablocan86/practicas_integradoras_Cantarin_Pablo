@@ -11,3 +11,10 @@
 2024-08-06T20:21:24.865Z - error: No se puede actualizar constraseñaCastError: Cast to ObjectId failed for value "pablo.cantarin86@gmail.com" (type string) at path "_id" for model "Users"
 2024-08-06T20:23:32.352Z - error: No se puede actualizar constraseñaTypeError: userService.getUserAndUpdatePassword is not a function
 2024-08-09T00:57:06.031Z - error: Imposibilidad de agregar productos al cerrito: Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+2024-09-03T20:51:08.688Z - warning: No ha iniciado sesión
+2024-09-03T20:51:18.073Z - warning: No ha iniciado sesión
+2024-09-03T20:51:35.959Z - warning: No ha iniciado sesión
+2024-09-03T20:52:41.333Z - warning: No ha iniciado sesión
+2024-09-03T20:53:32.223Z - warning: No ha iniciado sesión
+2024-09-03T20:54:14.033Z - warning: No ha iniciado sesión
+2024-09-03T20:54:22.981Z - warning: No ha iniciado sesión
