@@ -5,6 +5,9 @@
 }
 
 body {
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  width: 100%;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -13,10 +16,7 @@ body {
   gap: 30px;
 }
 
-.header {
-  width: 100%;
-}
-.header h2 {
+h2 {
   width: 100%;
   text-align: center;
   background-color: black;
@@ -38,8 +38,27 @@ body {
 
 form {
   margin-bottom: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
 }
 
+.linkDocumentation {
+  text-decoration: none;
+  background-color: blue;
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px gray;
+}
+
+.linkDocumentation:hover {
+  background-color: white;
+  border: 1px solid blue;
+  color: blue;
+}
 .cerrarSesion {
   width: 100%;
   background-color: red;

@@ -8,6 +8,7 @@
         <p>¡Hola,
           {{user.first_name}}
           {{user.last_name}}!</p>
+         
           <a class="linkPerfil" href="../api/sessions/current">Ir a mi Perfil<span class="material-symbols-outlined">people</span></a>
           </div>
           <p>Ultima conexión: {{user.last_connection}}</p>
@@ -16,7 +17,8 @@
         <p>Inicia sesión para inicar la compra</p>
       {{/if}}
       {{#if user}}
-
+ {{#if isAdmin}}
+ {{else}}
         <a
           href="/carts/{{user.cart}}"
           class="material-symbols-outlined"
@@ -29,6 +31,7 @@
           {{/if}}
           shopping_cart
         </a>
+        {{/if}}
       {{else}}
 
       {{/if}}
@@ -44,12 +47,14 @@
               <p>$ {{this.price}}</p>
               <div class="detailsProduct">
 {{#if ../response/userOne}}
+                {{#if ../isAdmin}}
+                {{else}}
                 <form
                   action="/carts/{{../response/userOne.cart}}/products/{{this._id}}"
                   method="POST"
                 ><button class="addButton" data-id="{{this._id}}">Agregar
                   </button></form>
-
+                {{/if}}
                 <a class="viewDetails" href="/productDetails/{{this._id}}">Ver
                   más...</a></div>
                   {{else}}
@@ -75,8 +80,13 @@
       {{/if}}
     
     {{#if user}}
+    {{#if isAdmin}}
+    <form action="/productsManager" method="GET">
+  <button class="addButton">Vista administrador</button></form>
+    {{else}}
   <form action="/messages" method="GET">
   <button class="addButton">Chateá con nosotros</button></form>
+  {{/if}}
       <form action="/api/sessions/logout" method="POST">
         <button class="closeSession" type="submit">Cerrar Sesión</button>
       </form>

@@ -91,6 +91,37 @@ exports.addToCart = async (req, res) => {
   }
 };
 
+exports.addToCartPut = async (req, res) => {
+  let { cid, pid } = req.params;
+  let user = req.session.user;
+  let product = await productService.getProductById(pid);
+
+  try {
+    if (user.email === product.owner) {
+      return res
+        .status(202)
+        .json({ message: "No se puede agregar un producto suyo" });
+    }
+    if (user.rol === "admin") {
+      devLogger.info(
+        "Rol de administador, no puede agregar productos al carrito"
+      );
+      return res.status(202).json({
+        message: "El administrador no puede agregar productos al carrito",
+      });
+    }
+
+    if (user.rol === "user" || user.rol === "premium") {
+      await cartService.addToCart(pid, cid);
+      return res.status(201).json({ message: "Cantidad agregada" });
+    }
+    res.redirect(`/carts/${cid}`);
+  } catch (error) {
+    prodLogger.error("Imposibilidad de agregar productos al cerrito: " + error);
+    return res.status(500).send("Error de conexión");
+  }
+};
+
 exports.deleteProduct = async (req, res) => {
   try {
     let { cid, pid } = req.params;
@@ -121,9 +152,11 @@ exports.deleteProduct = async (req, res) => {
 
         await cart.save();
 
-        res.redirect(`/carts/${cid}`);
+        return res.status(201).json({ message: "Cantidad eliminada" });
       }
     }
+
+    res.redirect(`/carts/${cid}`);
   } catch (error) {
     res.status(504).send(error);
   }

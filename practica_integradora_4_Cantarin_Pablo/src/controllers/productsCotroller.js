@@ -9,6 +9,7 @@ const CustomError = require("../services/errors/CustomErrors.js");
 const EErrors = require("../services/errors/enum.js");
 const { iqualCode } = require("../services/errors/info.js");
 const { devLogger } = require("../middleware/logger.js");
+
 exports.mockingProducts = async (req, res) => {
   let products = [];
   for (let i = 0; i < 100; i++) {
@@ -82,7 +83,7 @@ exports.getProducts = async (req, res) => {
     };
 
     //Renderizamos la vista
-    if (req.session.user) {
+    if (req.session.user.rol === "user" || req.session.user.rol === "premium") {
       const cart = await cartService.getCartById(req.session.user.cart);
       //   const cart = await cartModel.findById(req.session.user.cart);
       res.render("products", {
@@ -93,10 +94,13 @@ exports.getProducts = async (req, res) => {
         title: "Productos",
       });
     } else {
+      let isAdmin = true;
       res.render("products", {
+        user: req.session.user,
         response,
         style: "products.css",
         title: "Productos",
+        isAdmin: isAdmin,
       });
     }
 
@@ -110,7 +114,17 @@ exports.getProducts = async (req, res) => {
 exports.productDetails = async (req, res) => {
   let { pid } = req.params;
   const product = await productService.getProductById(pid);
-  if (req.session.user) {
+  if (req.session.user.rol === "admin") {
+    let isAdmin = true;
+    res.render("productDetail", {
+      user: req.session.user,
+      product,
+      style: "productDetails.css",
+      title: "Detalles producto",
+      isAdmin: isAdmin,
+    });
+    // res.send(product)
+  } else {
     const cart = await cartService.getCartById(req.session.user.cart);
     if (cart) {
       res.render("productDetail", {
@@ -121,14 +135,6 @@ exports.productDetails = async (req, res) => {
         title: "Detalles producto",
       });
     }
-
-    // res.send(product)
-  } else {
-    res.render("productDetail", {
-      product,
-      style: "productDetails.css",
-      title: "Detalles producto",
-    });
   }
 };
 

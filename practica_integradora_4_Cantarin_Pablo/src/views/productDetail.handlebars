@@ -1,17 +1,19 @@
-<div class="divDetails">
+a<div class="divDetails">
   {{#if user}}
-    <a
-      href="/carts/{{user.cart}}"
-      class="material-symbols-outlined"
-      id="imgCart"
-    >
-      {{#if cart.length}}
-        <p class="quantity">{{cart.length}}</p>
-      {{else}}
-        <p></p>
-      {{/if}}
-      shopping_cart
-    </a>
+    {{#if isAdmin}}{{else}}
+      <a
+        href="/carts/{{user.cart}}"
+        class="material-symbols-outlined"
+        id="imgCart"
+      >
+        {{#if cart.length}}
+          <p class="quantity">{{cart.length}}</p>
+        {{else}}
+          <p></p>
+        {{/if}}
+        shopping_cart
+      </a>
+    {{/if}}
   {{else}}
   {{/if}}
   <section class="productDetails">
@@ -24,11 +26,14 @@
         <p>Categoria: {{product.category}}</p>
         <div class="btns">
           {{#if user}}
-            <form
-              action="/carts/{{user.cart}}/products/{{product._id}}"
-              method="POST"
-            ><button class="addButton">Agregar </button></form>
+            {{#if isAdmin}}{{else}}
+              <form
+                action="/carts/{{user.cart}}/products/{{product._id}}"
+                method="POST"
+              ><button class="addButton">Agregar </button></form>
+            {{/if}}
             <a href="/products"><button class="shoping">Seguir comprando</button></a>
+
           {{else}}
             <a href="/products"><button class="shoping">Ver todos</button></a>
           {{/if}}

@@ -38,9 +38,13 @@ document.addEventListener("DOMContentLoaded", () => {
       try {
         const response = await fetch(`/carts/${cartId}/products/${productId}`, {
           method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
         });
-
+        const result = await response.json();
         if (response.ok) {
+          alert(result.message);
           window.location.reload();
           return;
           //remover el elemento del DOM

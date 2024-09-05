@@ -30,7 +30,7 @@ exports.putRolUser = async (req, res) => {
         .json({ message: `Se cambio rol de usuario a ${newRol.rol}` });
     }
     if (user.rol === "user") {
-      if (user.documents.length === 3) {
+      if (user.documents.length >= 3) {
         const newRol = { rol: "premium" };
         await userService.updateUserRol(user.email, newRol);
         return res
@@ -40,6 +40,10 @@ exports.putRolUser = async (req, res) => {
         return res.status(202).json({ message: `Falta documentación` });
       }
     }
+    if (user.rol === "admin")
+      return res
+        .status(202)
+        .json({ message: "El administrador no puede cambiar el rol" });
 
     res.redirect(`/premium/${uid}`);
   } catch (error) {
@@ -60,6 +64,7 @@ exports.getDocuments = async (req, res) => {
 
 exports.postDocuments = async (req, res) => {
   const { uid } = req.params;
+  let user = await userService.getUserById(uid);
   const idUser = { _id: uid };
   const documents = [];
   for (let fieldname in req.files) {
@@ -68,6 +73,14 @@ exports.postDocuments = async (req, res) => {
         name_document: fieldname,
         reference: file.filename,
       });
+    });
+  }
+  if (user.documents.length === 3) {
+    res.render("documents", {
+      style: "documents.css",
+      user: user,
+      id: uid,
+      message: "Ya se encuentra cargada toda la documentación",
     });
   }
   await userService.postDocuments(idUser, documents);
